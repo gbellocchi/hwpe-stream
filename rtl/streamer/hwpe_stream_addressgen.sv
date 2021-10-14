@@ -137,13 +137,13 @@ import hwpe_stream_package::*;
 
 module hwpe_stream_addressgen
 #(
-  parameter int unsigned REALIGN_TYPE    = HWPE_STREAM_REALIGN_SOURCE,
-  parameter int unsigned DECOUPLED       = 0,
-  parameter int unsigned STEP            = 4,
-  parameter int unsigned TRANS_CNT       = 16,
-  parameter int unsigned CNT             = 10, // number of bits used within the internal counter
-  parameter int unsigned DELAY_FLAGS     = 0,
-  parameter int unsigned IS_PROGRAMMABLE = 0
+  parameter int unsigned REALIGN_TYPE        = HWPE_STREAM_REALIGN_SOURCE,
+  parameter int unsigned DECOUPLED           = 0,
+  parameter int unsigned STEP                = 4,
+  parameter int unsigned TRANS_CNT           = 16,
+  parameter int unsigned CNT                 = 10, // number of bits used within the internal counter
+  parameter int unsigned DELAY_FLAGS         = 0,
+  parameter int unsigned IS_ADDRESSGEN_PROGR = 0
 )
 (
   // global signals
@@ -199,8 +199,8 @@ module hwpe_stream_addressgen
   assign feat_stride    = ctrl_i.feat_stride;
   assign feat_length_m1 = ctrl_i.feat_length - 1;
   assign feat_roll_m1   = ctrl_i.feat_roll - 1;
-  assign step           = (IS_PROGRAMMABLE == 1'b1) ? ctrl_i.step :
-                                                      STEP;
+  assign step           = (IS_ADDRESSGEN_PROGR == 1'b1) ? ctrl_i.step :
+                                                          STEP;
 
   generate
     if(REALIGN_TYPE == HWPE_STREAM_REALIGN_SINK) begin : last_packet_sink_gen
