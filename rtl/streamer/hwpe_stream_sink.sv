@@ -95,7 +95,8 @@ module hwpe_stream_sink
   parameter int unsigned NB_TCDM_PORTS   = DATA_WIDTH/32,
   parameter int unsigned REALIGNABLE     = 1,
   parameter int unsigned LATCH_FIFO      = 0,
-  parameter int unsigned TCDM_FIFO_DEPTH = 2
+  parameter int unsigned TCDM_FIFO_DEPTH = 2,
+  parameter int unsigned IS_PROGRAMMABLE = 0
 )
 (
   input logic clk_i,
@@ -152,9 +153,10 @@ module hwpe_stream_sink
   );
 
   hwpe_stream_addressgen #(
-    .STEP         ( NB_TCDM_PORTS*4          ),
-    .REALIGN_TYPE ( HWPE_STREAM_REALIGN_SINK ),
-    .DELAY_FLAGS  ( 1                        )
+    .STEP               ( NB_TCDM_PORTS*4          ),
+    .REALIGN_TYPE       ( HWPE_STREAM_REALIGN_SINK ),
+    .DELAY_FLAGS        ( 1                        ),
+    .IS_PROGRAMMABLE    ( IS_PROGRAMMABLE          )
   ) i_addressgen (
     .clk_i          ( clk_i                    ),
     .rst_ni         ( rst_ni                   ),

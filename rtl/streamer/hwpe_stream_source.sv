@@ -95,12 +95,13 @@ import hwpe_stream_package::*;
 module hwpe_stream_source
 #(
   // Stream interface params
-  parameter int unsigned DATA_WIDTH    = 32,
-  parameter int unsigned NB_TCDM_PORTS = DATA_WIDTH/32,
-  parameter int unsigned DECOUPLED     = 0,
-  parameter int unsigned LATCH_FIFO    = 0,
-  parameter int unsigned REALIGNABLE   = 1,
-  parameter int unsigned TRANS_CNT     = 16
+  parameter int unsigned DATA_WIDTH      = 32,
+  parameter int unsigned NB_TCDM_PORTS   = DATA_WIDTH/32,
+  parameter int unsigned DECOUPLED       = 0,
+  parameter int unsigned LATCH_FIFO      = 0,
+  parameter int unsigned REALIGNABLE     = 1,
+  parameter int unsigned TRANS_CNT       = 16,
+  parameter int unsigned IS_PROGRAMMABLE = 0
 )
 (
   input logic clk_i,
@@ -173,10 +174,11 @@ module hwpe_stream_source
 
   // generate addresses
   hwpe_stream_addressgen #(
-    .STEP         ( NB_TCDM_PORTS*4            ),
-    .TRANS_CNT    ( TRANS_CNT                  ),
-    .REALIGN_TYPE ( HWPE_STREAM_REALIGN_SOURCE ),
-    .DECOUPLED    ( DECOUPLED                  )
+    .STEP               ( NB_TCDM_PORTS*4            ),
+    .TRANS_CNT          ( TRANS_CNT                  ),
+    .REALIGN_TYPE       ( HWPE_STREAM_REALIGN_SOURCE ),
+    .DECOUPLED          ( DECOUPLED                  ),
+    .IS_PROGRAMMABLE    ( IS_PROGRAMMABLE            )
   ) i_addressgen (
     .clk_i          ( clk_i                    ),
     .rst_ni         ( rst_ni                   ),
