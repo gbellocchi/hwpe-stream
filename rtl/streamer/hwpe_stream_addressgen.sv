@@ -143,7 +143,7 @@ module hwpe_stream_addressgen
   parameter int unsigned TRANS_CNT           = 16,
   parameter int unsigned CNT                 = 10, // number of bits used within the internal counter
   parameter int unsigned DELAY_FLAGS         = 0,
-  parameter int unsigned IS_ADDRESSGEN_PROGR = 0
+  parameter bit          IS_ADDRESSGEN_PROGR = 0
 )
 (
   // global signals
@@ -168,7 +168,7 @@ module hwpe_stream_addressgen
   logic signed [15:0] feat_stride;
   logic        [15:0] feat_length_m1;
   logic        [15:0] feat_roll_m1;
-  logic        [15:0] step;
+  logic        [15:0] local_step;
 
   logic        misalignment;
   logic        misalignment_first;
@@ -199,7 +199,7 @@ module hwpe_stream_addressgen
   assign feat_stride    = ctrl_i.feat_stride;
   assign feat_length_m1 = ctrl_i.feat_length - 1;
   assign feat_roll_m1   = ctrl_i.feat_roll - 1;
-  assign step           = (IS_ADDRESSGEN_PROGR == 1'b1) ? ctrl_i.step :
+  assign local_step     = (IS_ADDRESSGEN_PROGR == 1'b1) ? ctrl_i.step : 
                                                           STEP;
 
   generate
@@ -300,7 +300,7 @@ module hwpe_stream_addressgen
       end
       else begin
         if(word_counter < line_length_m1) begin
-          word_addr <= word_addr + step;
+          word_addr <= word_addr + local_step;
           line_addr <= line_addr;
           feat_addr <= feat_addr;
           word_counter <= word_counter + 1;

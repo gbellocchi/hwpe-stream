@@ -101,7 +101,7 @@ module hwpe_stream_source
   parameter int unsigned LATCH_FIFO          = 0,
   parameter int unsigned REALIGNABLE         = 1,
   parameter int unsigned TRANS_CNT           = 16,
-  parameter int unsigned IS_ADDRESSGEN_PROGR = 0
+  parameter bit          IS_ADDRESSGEN_PROGR = 0
 )
 (
   input logic clk_i,
